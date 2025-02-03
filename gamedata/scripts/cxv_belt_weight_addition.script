@@ -5,6 +5,18 @@ local total_belt_weight = 0
 local add_weight = weight.add_weight
 local weight_key = "cxv_belt_weight"
 
+local get_config = cxv_belt_weight_mcm.get_config
+local belt_weight_modifier = get_config("weight_mult") or 1
+local was_config_changed = false
+
+function update_weight_option_change()
+	if was_config_changed then
+		CreateTimeEvent("belt_weight_adjust" .. math.random(999), "belt_weight_adjust", update_delay, update_belt_weight)
+		was_config_changed = false
+		UnregisterScriptCallback("actor_on_update", update_weight_option_change)
+	end
+end
+
 function iter_belt_weight(owner, obj)
 	local section = obj:section()
 	local attach_weight = SYS_GetParam(0, section, "inv_weight", 0) or 0
@@ -14,7 +26,7 @@ end
 function update_belt_weight()
 	total_belt_weight = 0
 	db.actor:iterate_belt(iter_belt_weight)
-	add_weight(weight_key, total_belt_weight, true)
+	add_weight(weight_key, (total_belt_weight * belt_weight_modifier), true)
 	return true
 end
 
@@ -28,7 +40,22 @@ function move_attachment(attachment)
 	end
 end
 
+function on_option_change()
+	if ui_mcm and cxv_belt_weight_mcm then
+		local old_modifier = belt_weight_modifier
+		belt_weight_modifier = get_config("weight_mult") or 1
+		if belt_weight_modifier ~= old_modifier then
+			was_config_changed = true
+			RegisterScriptCallback("actor_on_update", update_weight_option_change)
+		end
+	end
+end
+
 function on_game_start()
+	-- ilrathCXV (02/03/2025): MCM options
+	RegisterScriptCallback("on_option_change",on_option_change)
+	on_option_change()
+
 	RegisterScriptCallback("actor_item_to_ruck", move_attachment)
 	RegisterScriptCallback("actor_item_to_belt", move_attachment)
 end
