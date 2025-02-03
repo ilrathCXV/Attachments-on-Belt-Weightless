@@ -1,0 +1,34 @@
+if not weight then return end	-- in case the user doesn't have this script (for some reason)
+
+local update_delay = 0.3	-- seconds
+local total_belt_weight = 0
+local add_weight = weight.add_weight
+local weight_key = "cxv_belt_weight"
+
+function iter_belt_weight(owner, obj)
+	local section = obj:section()
+	local attach_weight = SYS_GetParam(0, section, "inv_weight", 0) or 0
+	total_belt_weight = total_belt_weight + attach_weight
+end
+
+function update_belt_weight()
+	total_belt_weight = 0
+	db.actor:iterate_belt(iter_belt_weight)
+	add_weight(weight_key, total_belt_weight, true)
+	return true
+end
+
+function move_attachment(attachment)
+	if not attachment then return end
+	local section = attachment:section()
+	local kind = SYS_GetParam(0, section, "kind", "")
+	if not kind then return end
+	if IsArtefact(attachment) or (kind == "i_arty_junk") or (kind == "i_mutant_belt") or (kind == "i_attach") or (section == "af_lucifer") then
+		CreateTimeEvent("belt_weight_adjust" .. attachment:id(), "belt_weight_adjust", update_delay, update_belt_weight)
+	end
+end
+
+function on_game_start()
+	RegisterScriptCallback("actor_item_to_ruck", move_attachment)
+	RegisterScriptCallback("actor_item_to_belt", move_attachment)
+end
