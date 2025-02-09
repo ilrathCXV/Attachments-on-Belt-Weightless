@@ -7,19 +7,29 @@
 
 
 	<string id="ui_mcm_cxv_belt_weight_title">
-		<text>Adjustable Belt Weight</text>
+		<text>Adjustable Equipment Weight</text>
 	</string>
 	<string id="ui_mcm_menu_cxv_belt_weight">
-		<text>Adjustable Belt Weight</text>
+		<text>Adjustable Equipment Weight</text>
 	</string>
 
-	<string id="ui_mcm_cxv_belt_weight_weight_mult">
-		<text>Weight Reduction Multiplier</text>
+	<string id="ui_mcm_cxv_belt_weight_belt_weight_mult">
+		<text>Belt Weight Reduction Multiplier</text>
 	</string>
-	<string id="ui_mcm_cxv_belt_weight_weight_mult_desc">
+	<string id="ui_mcm_cxv_belt_weight_belt_weight_mult_desc">
 		<text>The amount of weight you want to have returned to you based on your belt attachments.\n
 				1.0 = 100% of attachment weight is returned to you\n
 				0.5 = 50% of attachment weight is returned to you
+		</text>
+	</string>
+	
+	<string id="ui_mcm_cxv_belt_weight_helmet_weight_mult">
+		<text>Helmet Weight Reduction Multiplier</text>
+	</string>
+	<string id="ui_mcm_cxv_belt_weight_helmet_weight_mult_desc">
+		<text>The amount of weight you want to have returned to you based on your helmet.\n
+				1.0 = 100% of helmet weight is returned to you\n
+				0.5 = 50% of helmet weight is returned to you
 		</text>
 	</string>
 

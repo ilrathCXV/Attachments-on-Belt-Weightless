@@ -1,6 +1,7 @@
 -- If you don't use MCM, change your defaults from here.
 local defaults = {
-	["weight_mult"] = 1.0,
+	["belt_weight_mult"] = 1.0,
+	["helmet_weight_mult"] = 1.0,
 }
 
 function get_config(key)
@@ -10,7 +11,8 @@ end
 function on_mcm_load()
 	op = { id= "cxv_belt_weight",sh=true ,gr={
 			{ id= "title",type= "slide",link= "ui_options_slider_player",text="ui_mcm_cxv_belt_weight_title",size= {512,50},spacing= 20 },
-			{id = "weight_mult",type = "track", val = 2, min = 0.01, max = 1.0, step = 0.01, def = 1.0},
+			{id = "belt_weight_mult",type = "track", val = 2, min = 0.01, max = 1.0, step = 0.01, def = 1.0},
+			{id = "helmet_weight_mult",type = "track", val = 2, min = 0.01, max = 1.0, step = 0.01, def = 1.0},
 		}
 	}
 
